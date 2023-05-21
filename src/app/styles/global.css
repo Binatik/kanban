@@ -1,0 +1,16 @@
+:root {
+	--color-primary: #dfe3e6;
+	--color-secondary: #6b808c;
+	--color-white: #fff;
+	--color-black: #000;
+
+	--container-extra: calc(1200px - 20px);
+}
+
+html,
+body {
+	background-image: url('https://proprikol.ru/wp-content/uploads/2020/09/kartinki-milyh-zhivotnyh-52.jpg');
+	font-family: 'Montserrat', sans-serif;
+	min-height: 100vh;
+	box-sizing: border-box;
+}

@@ -1,0 +1,9 @@
+.paper {
+	width: 272px;
+	height: 614px;
+	border-radius: 3px;
+}
+
+.paper_primary {
+	background-color: var(--color-primary);
+}
