@@ -1,6 +1,6 @@
 .paper {
 	width: 272px;
-	height: 614px;
+	min-height: 43px;
 	border-radius: 3px;
 }
 
