@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { latestReducer } from './reducers/latest/latestSlice'
+import { kanbanReducer } from './reducers/kanban/kanbanSlice'
 
 export const store = configureStore({
 	reducer: {
-		latestReducer,
+		kanbanReducer,
 	},
 })
 
