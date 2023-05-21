@@ -1,10 +1,14 @@
 .paper {
 	width: 272px;
-	min-height: 43px;
+	min-height: calc(43px - 24px);
 	border-radius: 3px;
 	padding: 12px;
 }
 
 .paper_primary {
 	background-color: var(--color-primary);
+}
+
+.paper_secondary {
+	background-color: var(--color-white);
 }

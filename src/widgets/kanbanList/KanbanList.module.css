@@ -1,0 +1,14 @@
+.kanban_list {
+	display: flex;
+}
+
+.kanban_paper {
+	margin-right: 12px;
+}
+
+.kanban_item {
+	box-sizing: border-box;
+}
+
+.kanban_new {
+}

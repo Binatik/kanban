@@ -7,6 +7,7 @@ function Paper({ appearance, children, className }: IPaperProps) {
 		<div
 			className={classNames(className, styles.paper, {
 				[styles.paper_primary]: appearance === 'primary',
+				[styles.paper_secondary]: appearance === 'secondary',
 			})}>
 			{children}
 		</div>

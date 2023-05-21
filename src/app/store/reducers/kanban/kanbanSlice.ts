@@ -11,6 +11,7 @@ export interface IKanbanColumn {
 	id: string
 	title: string
 	cards: IKanbanCard[]
+	isShowCreator: boolean
 }
 
 export interface IKanbanState {
@@ -18,13 +19,7 @@ export interface IKanbanState {
 }
 
 const initialState: IKanbanState = {
-	colums: [
-		{
-			id: uniqid(),
-			title: 'Дела на сегодня',
-			cards: [{ id: uniqid(), text: 'Добавить еще одну карточку' }],
-		},
-	],
+	colums: [],
 }
 
 export const kanbanSlice = createSlice({
