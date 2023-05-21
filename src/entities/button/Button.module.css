@@ -1,0 +1,28 @@
+button {
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: none;
+	border: none;
+}
+
+.button:focus-visible {
+	outline: 3px solid var(--color-white);
+}
+
+.button_vector {
+	transition: 0.2s fill, 0.2s transform;
+	margin-right: 12px;
+	fill: var(--color-secondary);
+}
+
+.button_primary:hover .button_vector {
+	fill: var(--color-surface);
+	transform: rotate(180deg);
+}
+
+.button_primary:focus-visible .button_vector {
+	fill: var(--color-surface);
+	transform: rotate(180deg);
+}
