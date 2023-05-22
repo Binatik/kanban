@@ -1,4 +1,4 @@
-import { Button, Paragraph } from '../../entities'
+import { ButtonPrimary, Paragraph } from '../../entities'
 import { useDispatch } from 'react-redux'
 import { createColumn } from '../../app/store/reducers/kanban/kanbanSlice'
 import { IKanbanColumn } from '../../app/store/reducers/kanban/kanbanSlice'
@@ -15,11 +15,11 @@ function CreateColumn() {
 	const dispatch = useDispatch()
 
 	return (
-		<Button onClick={() => dispatch(createColumn(column))} appearance="primary">
-			<Paragraph appearance="secondary" size="sm">
+		<ButtonPrimary onClick={() => dispatch(createColumn(column))} appearance="primary">
+			<Paragraph appearance="surface" size="md">
 				Добавить еще одну колонку
 			</Paragraph>
-		</Button>
+		</ButtonPrimary>
 	)
 }
 

@@ -1,0 +1,17 @@
+button {
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: none;
+	border-radius: 3px;
+}
+
+.button:focus-visible {
+	outline: 3px solid var(--color-white);
+}
+
+.button_primary {
+	background-color: var(--color-surface);
+	padding: 8px;
+}

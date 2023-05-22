@@ -29,8 +29,12 @@ export const kanbanSlice = createSlice({
 		createColumn: (state, action: PayloadAction<IKanbanColumn>) => {
 			state.colums.push(action.payload)
 		},
+
+		createCard: (state, action: PayloadAction<IKanbanCard>) => {
+			state.colums.map((column) => column.cards.push(action.payload))
+		},
 	},
 })
 
 export const kanbanReducer = kanbanSlice.reducer
-export const { createColumn } = kanbanSlice.actions
+export const { createColumn, createCard } = kanbanSlice.actions

@@ -7,8 +7,10 @@ function Paragraph({ appearance, size, children, className }: IParagraphProps) {
 		<p
 			className={classNames(className, styles.paragraph, {
 				[styles.paragraph_sm]: size === 'sm',
+				[styles.paragraph_md]: size === 'md',
 				[styles.paragraph_primary]: appearance === 'primary',
 				[styles.paragraph_secondary]: appearance === 'secondary',
+				[styles.paragraph_surface]: appearance === 'surface',
 			})}>
 			{children}
 		</p>

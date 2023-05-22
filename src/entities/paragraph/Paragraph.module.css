@@ -1,11 +1,16 @@
 .paragraph {
 	font-family: 'Montserrat';
 	font-style: normal;
-	font-weight: 400;
 }
 
 .paragraph_sm {
 	font-size: 0.8125rem;
+	font-weight: 400;
+}
+
+.paragraph_md {
+	font-size: 0.8125rem;
+	font-weight: 700;
 }
 
 .paragraph_primary {
@@ -14,4 +19,12 @@
 
 .paragraph_secondary {
 	color: var(--color-secondary);
+}
+
+.paragraph_secondary {
+	color: var(--color-secondary);
+}
+
+.paragraph_surface {
+	color: var(--color-white);
 }
