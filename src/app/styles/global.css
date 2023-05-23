@@ -6,6 +6,8 @@
 	--color-black: #000;
 
 	--container-extra: calc(1200px - 10px);
+
+	font-family: 'Montserrat', sans-serif;
 }
 
 html,

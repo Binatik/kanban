@@ -1,0 +1,26 @@
+.dialog {
+	resize: none;
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 400;
+	background: transparent;
+	border: none;
+	font-size: 13px;
+}
+
+.dialog_md {
+	min-height: calc(54px - 12px);
+}
+
+textarea[placeholder] {
+	color: #b8b9bb;
+}
+textarea::-moz-placeholder {
+	color: #b8b9bb;
+}
+textarea:-moz-placeholder {
+	color: #b8b9bb;
+}
+textarea:-ms-input-placeholder {
+	color: #b8b9bb;
+}
