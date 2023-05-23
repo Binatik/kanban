@@ -1,6 +1,6 @@
 import { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react'
 
-export interface IShowDialogProps
+export interface IDialogProps
 	extends DetailedHTMLProps<HTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> {
 	placeholder: string
 	size?: 'md'

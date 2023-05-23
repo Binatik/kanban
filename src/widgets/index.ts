@@ -1,2 +1,2 @@
-export * from './showDialog/ShowDialog'
+export * from './showDialog/Dialog'
 export * from './kanbanList/KanbanList'

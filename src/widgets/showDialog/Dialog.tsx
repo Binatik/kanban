@@ -1,9 +1,9 @@
 import { Paper } from '../../entities'
-import { IShowDialogProps } from './ShowDialog.props'
-import styles from './ShowDialog.module.css'
+import { IDialogProps } from './Dialog.props'
+import styles from './Dialog.module.css'
 import classNames from 'classnames'
 
-function ShowDialog({ size, placeholder }: IShowDialogProps) {
+function Dialog({ size, placeholder }: IDialogProps) {
 	function resizeTexterea(event: React.KeyboardEvent<HTMLTextAreaElement>) {
 		const textarea = event.currentTarget
 		textarea.style.height = 'auto'
@@ -11,7 +11,7 @@ function ShowDialog({ size, placeholder }: IShowDialogProps) {
 	}
 
 	return (
-		<Paper appearance="secondary">
+		<Paper size="sm" className="filled" appearance="secondary">
 			<textarea
 				onInput={resizeTexterea}
 				rows={1}
@@ -24,4 +24,4 @@ function ShowDialog({ size, placeholder }: IShowDialogProps) {
 	)
 }
 
-export { ShowDialog }
+export { Dialog }

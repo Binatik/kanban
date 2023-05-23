@@ -16,10 +16,12 @@ export interface IKanbanColumn {
 
 export interface IKanbanState {
 	colums: IKanbanColumn[]
+	showDialog: boolean
 }
 
 const initialState: IKanbanState = {
 	colums: [],
+	showDialog: false,
 }
 
 export const kanbanSlice = createSlice({
@@ -33,8 +35,14 @@ export const kanbanSlice = createSlice({
 		createCard: (state, action: PayloadAction<IKanbanCard>) => {
 			state.colums.map((column) => column.cards.push(action.payload))
 		},
+		openDialog: (state) => {
+			state.showDialog = true
+		},
+		closeDialog: (state) => {
+			state.showDialog = false
+		},
 	},
 })
 
 export const kanbanReducer = kanbanSlice.reducer
-export const { createColumn, createCard } = kanbanSlice.actions
+export const { createColumn, createCard, openDialog, closeDialog } = kanbanSlice.actions
