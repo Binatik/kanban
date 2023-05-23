@@ -14,6 +14,11 @@
 	min-height: calc(54px - 12px);
 }
 
+.dialog_bottom {
+	display: flex;
+	justify-content: space-between;
+}
+
 textarea[placeholder] {
 	color: #b8b9bb;
 }

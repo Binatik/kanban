@@ -1,6 +1,6 @@
 import { ButtonPrimary, Paragraph } from '../../entities'
 import { useDispatch } from 'react-redux'
-import { createColumn } from '../../app/store/reducers/kanban/kanbanSlice'
+import { closeDialog, createColumn } from '../../app/store/reducers/kanban/kanbanSlice'
 import { IKanbanColumn } from '../../app/store/reducers/kanban/kanbanSlice'
 import uniqid from 'uniqid'
 
@@ -8,16 +8,21 @@ const column: IKanbanColumn = {
 	id: uniqid(),
 	title: 'Дела на сегодня',
 	isShowCreator: false,
-	cards: [{ id: uniqid(), text: 'Добавить еще одну колонку' }],
+	cards: [],
 }
 
 function CreateColumn() {
 	const dispatch = useDispatch()
 
+	function dialogOnClick() {
+		dispatch(closeDialog())
+		dispatch(createColumn(column))
+	}
+
 	return (
-		<ButtonPrimary onClick={() => dispatch(createColumn(column))} appearance="primary">
+		<ButtonPrimary onClick={dialogOnClick} appearance="primary">
 			<Paragraph appearance="surface" size="md">
-				Добавить еще одну колонку
+				Добавить колонку
 			</Paragraph>
 		</ButtonPrimary>
 	)
