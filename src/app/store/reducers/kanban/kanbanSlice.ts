@@ -17,12 +17,14 @@ export interface IKanbanState {
 	colums: IKanbanColumn[]
 	showDialog: boolean
 	showDialogCard: boolean
+	clickIndex: number
 }
 
 const initialState: IKanbanState = {
 	colums: [],
 	showDialog: false,
 	showDialogCard: false,
+	clickIndex: 0,
 }
 
 export const kanbanSlice = createSlice({
@@ -34,17 +36,20 @@ export const kanbanSlice = createSlice({
 		},
 
 		createCard: (state, action: PayloadAction<IKanbanCard>) => {
-			state.colums.map((column) => column.cards.push(action.payload))
+			state.colums[state.clickIndex].cards.push(action.payload)
 		},
-		openDialog: (state, action: PayloadAction<IOpenDialogProps['type']>) => {
-			switch (action.payload) {
+		openDialog: (state, action: PayloadAction<IOpenDialogProps>) => {
+			state.clickIndex = action.payload.index
+			switch (action.payload.type) {
 				case 'column':
 					if (state.showDialog) alert('Вы уже пытаетесь добавить что-то')
 					state.showDialog = true
 					break
 				case 'card':
-					if (state.showDialog) alert('Вы уже пытаетесь добавить что-то')
+					if (state.showDialogCard) alert('Вы уже пытаетесь добавить что-то')
 					state.showDialogCard = true
+					break
+				default:
 					break
 			}
 		},

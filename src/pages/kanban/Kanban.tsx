@@ -11,6 +11,8 @@ function Kanban() {
 	const stateColums = useSelector((state: RootState) => state.kanbanReducer.colums)
 	const showDialog = useSelector((state: RootState) => state.kanbanReducer.showDialog)
 	const showDialogCard = useSelector((state: RootState) => state.kanbanReducer.showDialogCard)
+	const clickIndex = useSelector((state: RootState) => state.kanbanReducer.clickIndex)
+	// console.log(clickIndex)
 
 	console.log(stateColums)
 
@@ -46,23 +48,27 @@ function Kanban() {
 							</>
 						))}
 
+						{/* Первое создание карточки. */}
+						{column.cards.length === 0 && !showDialogCard && (
+							<OpenDialog index={index} type="card" text="Добавь первую карточку" />
+						)}
+
+						{/* Последующие создание карточки. */}
+						{column.cards.length > 0 && !showDialogCard ? (
+							<OpenDialog index={index} type="card" text="Добавь еще одну карточку" />
+						) : null}
+
+						{showDialogCard && clickIndex !== index ? (
+							<OpenDialog index={index} type="card" text="Добавь еще одну карточку" />
+						) : null}
+
 						{/* Окно добавления карточки */}
-						{showDialogCard && (
+						{clickIndex === index && showDialogCard && (
 							<Dialog
 								size="md"
 								component={<CreateCard />}
 								placeholder="Введите описание карточки"
 							/>
-						)}
-
-						{/* Первое создание карточки. */}
-						{column.cards.length === 0 && !showDialogCard && (
-							<OpenDialog type="card" text="Добавь первую карточку" />
-						)}
-
-						{/* Последующие создание карточки. */}
-						{column.cards.length > 0 && !showDialogCard && (
-							<OpenDialog type="card" text="Добавь еще одну карточку" />
 						)}
 					</Paper>
 				))}
@@ -86,7 +92,7 @@ function Kanban() {
 						className={classNames(styles.kanban_column)}
 						appearance="primary"
 						size="md">
-						<OpenDialog type="column" text="Добавь первую колонку" />
+						<OpenDialog index={0} type="column" text="Добавь первую колонку" />
 					</Paper>
 				)}
 
@@ -96,7 +102,7 @@ function Kanban() {
 						className={classNames(styles.kanban_column)}
 						appearance="primary"
 						size="md">
-						<OpenDialog type="column" text="Добавь еще одну колонку" />
+						<OpenDialog index={0} type="column" text="Добавь еще одну колонку" />
 					</Paper>
 				)}
 
