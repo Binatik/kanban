@@ -11,3 +11,16 @@
 
 .kanban_new {
 }
+
+.kanban_column {
+	align-self: self-start;
+	margin-right: 8px;
+}
+
+.kanban_title {
+	margin-bottom: 12px;
+}
+
+.kanban_item {
+	width: 100%;
+}

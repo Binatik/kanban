@@ -2,10 +2,9 @@ import { Paper } from '../../entities'
 import { IDialogProps } from './Dialog.props'
 import styles from './Dialog.module.css'
 import classNames from 'classnames'
-import { CreateColumn } from '../../features'
 import { CloseDialog } from '../../features/closeDialog/CloseDialog'
 
-function Dialog({ size, placeholder }: IDialogProps) {
+function Dialog({ size, component, className, placeholder }: IDialogProps) {
 	function resizeTexterea(event: React.KeyboardEvent<HTMLTextAreaElement>) {
 		const textarea = event.currentTarget
 		textarea.style.height = 'auto'
@@ -14,7 +13,10 @@ function Dialog({ size, placeholder }: IDialogProps) {
 
 	return (
 		<>
-			<Paper size="sm" className="filled" appearance="secondary">
+			<Paper
+				className={classNames(styles.dialog_top, className)}
+				size="sm"
+				appearance="secondary">
 				<textarea
 					onInput={resizeTexterea}
 					rows={1}
@@ -25,7 +27,7 @@ function Dialog({ size, placeholder }: IDialogProps) {
 				/>
 			</Paper>
 			<div className={styles.dialog_bottom}>
-				<CreateColumn />
+				{component}
 				<CloseDialog />
 			</div>
 		</>

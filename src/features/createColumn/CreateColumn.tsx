@@ -7,7 +7,6 @@ import uniqid from 'uniqid'
 const column: IKanbanColumn = {
 	id: uniqid(),
 	title: 'Дела на сегодня',
-	isShowCreator: false,
 	cards: [],
 }
 

@@ -1,6 +1,6 @@
 import { ButtonPrimary, Paragraph } from '../../entities'
 import { useDispatch } from 'react-redux'
-import { IKanbanCard, createCard } from '../../app/store/reducers/kanban/kanbanSlice'
+import { IKanbanCard, closeDialog, createCard } from '../../app/store/reducers/kanban/kanbanSlice'
 import uniqid from 'uniqid'
 
 const card: IKanbanCard = {
@@ -11,10 +11,15 @@ const card: IKanbanCard = {
 function CreateCard() {
 	const dispatch = useDispatch()
 
+	function dialogOnClick() {
+		dispatch(closeDialog())
+		dispatch(createCard(card))
+	}
+
 	return (
-		<ButtonPrimary onClick={() => dispatch(createCard(card))} appearance="primary">
+		<ButtonPrimary onClick={dialogOnClick} appearance="primary">
 			<Paragraph appearance="surface" size="md">
-				Добавить еще одну карточку
+				Добавить карточку
 			</Paragraph>
 		</ButtonPrimary>
 	)

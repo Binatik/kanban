@@ -26,8 +26,9 @@ body {
 }
 
 .container_extra {
-	max-width: var(--container-extra);
+	max-width: 100%;
 	padding: 20px;
+	/* overflow-x: scroll; */
 }
 
 .filled {
