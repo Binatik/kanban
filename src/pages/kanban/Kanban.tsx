@@ -1,26 +1,24 @@
 import { useSelector } from 'react-redux'
 import { Heading, Paper, Paragraph } from '../../entities'
 import { RootState } from '../../app/store/store'
-import { CreateColumn } from '../../features/createColumn/CreateColumn'
-import { CreateCard, OpenDialog } from '../../features'
+import { OpenDialog } from '../../features'
+import { Dialog } from '../../widgets'
 import classNames from 'classnames'
 import styles from './Kanban.module.css'
-import { Dialog } from '../../widgets'
 
 function Kanban() {
-	const stateColums = useSelector((state: RootState) => state.kanbanReducer.colums)
-	const showDialog = useSelector((state: RootState) => state.kanbanReducer.showDialog)
-	const showDialogCard = useSelector((state: RootState) => state.kanbanReducer.showDialogCard)
-	const clickIndex = useSelector((state: RootState) => state.kanbanReducer.clickIndex)
-	// console.log(clickIndex)
-
-	console.log(stateColums)
+	const state = {
+		colums: useSelector((state: RootState) => state.kanbanReducer.colums),
+		showDialog: useSelector((state: RootState) => state.kanbanReducer.showDialog),
+		showDialogCard: useSelector((state: RootState) => state.kanbanReducer.showDialogCard),
+		clickIndex: useSelector((state: RootState) => state.kanbanReducer.clickIndex),
+	}
 
 	return (
 		<main className="container_extra">
 			<div className={styles.kanban_list}>
 				{/* //Структура канбана */}
-				{stateColums.map((column, index: number) => (
+				{state.colums.map((column, index: number) => (
 					<Paper
 						className={classNames(styles.kanban_column)}
 						key={column.id}
@@ -49,24 +47,34 @@ function Kanban() {
 						))}
 
 						{/* Первое создание карточки. */}
-						{column.cards.length === 0 && !showDialogCard && (
+						{column.cards.length === 0 && !state.showDialogCard && (
 							<OpenDialog index={index} type="card" text="Добавь первую карточку" />
 						)}
 
 						{/* Последующие создание карточки. */}
-						{column.cards.length > 0 && !showDialogCard ? (
+						{column.cards.length > 0 && !state.showDialogCard ? (
 							<OpenDialog index={index} type="card" text="Добавь еще одну карточку" />
 						) : null}
 
-						{showDialogCard && clickIndex !== index ? (
+						{/* Создание карточки в месте где не было клика */}
+						{state.showDialogCard &&
+						state.clickIndex !== index &&
+						column.cards.length === 0 ? (
+							<OpenDialog index={index} type="card" text="Добавь первую карточку" />
+						) : null}
+
+						{/* Последующие создание карточки в месте где не было клика */}
+						{state.showDialogCard &&
+						state.clickIndex !== index &&
+						column.cards.length > 0 ? (
 							<OpenDialog index={index} type="card" text="Добавь еще одну карточку" />
 						) : null}
 
 						{/* Окно добавления карточки */}
-						{clickIndex === index && showDialogCard && (
+						{state.clickIndex === index && state.showDialogCard && (
 							<Dialog
 								size="md"
-								component={<CreateCard />}
+								command="createCard"
 								placeholder="Введите описание карточки"
 							/>
 						)}
@@ -74,20 +82,17 @@ function Kanban() {
 				))}
 
 				{/* Окно добавления колонки */}
-				{showDialog && (
+				{state.showDialog && (
 					<Paper
 						className={classNames(styles.kanban_column)}
 						appearance="primary"
 						size="md">
-						<Dialog
-							component={<CreateColumn />}
-							placeholder="Введите название колонки"
-						/>
+						<Dialog command="createColumn" placeholder="Введите название колонки" />
 					</Paper>
 				)}
 
 				{/* Первое создание колонки. */}
-				{stateColums.length === 0 && !showDialog && (
+				{state.colums.length === 0 && !state.showDialog && (
 					<Paper
 						className={classNames(styles.kanban_column)}
 						appearance="primary"
@@ -97,7 +102,7 @@ function Kanban() {
 				)}
 
 				{/* Последующее создание колонок */}
-				{stateColums.length > 0 && (
+				{state.colums.length > 0 && (
 					<Paper
 						className={classNames(styles.kanban_column)}
 						appearance="primary"
@@ -105,63 +110,6 @@ function Kanban() {
 						<OpenDialog index={0} type="column" text="Добавь еще одну колонку" />
 					</Paper>
 				)}
-
-				{/* Первое создание карточки.
-				{stateColums.length === 0 && !showDialog && (
-					<Paper appearance="primary" size="md">
-						<OpenDialog text="Добавь первую колонку" />
-					</Paper>
-				)} */}
-
-				{/* {stateColums.length === 0 ? (
-					<Paper
-						size="md"
-						className={classNames(styles.kanban_column)}
-						appearance="primary">
-						{showDialog ? (
-							<Dialog
-								component={<CreateColumn />}
-								placeholder="Введите название колонки"
-							/>
-						) : (
-							<OpenDialog text="Добавь первую колонку" />
-						)}
-					</Paper>
-				) : null}
-				{stateColums.map((column) => {
-					return (
-						<>
-							<Paper
-								size="md"
-								className={classNames(styles.kanban_column)}
-								appearance="primary">
-								<Heading
-									className={classNames(styles.kanban_title)}
-									size="sm"
-									tag="h2"
-									appearance="primary">
-									{column.title}
-								</Heading>
-								<OpenDialog text="Добавь еще одну карточку" />
-							</Paper>
-						</>
-					)
-				})}
-				{stateColums.length > 0 && (
-					<Paper
-						size="md"
-						className={classNames(styles.kanban_column)}
-						appearance="primary">
-						{showDialog ? (
-							<Dialog
-								component={<CreateColumn />}
-								placeholder="Введите название колонки"
-							/>
-						) : (
-							<OpenDialog text="Добавь еще одну колонку" />
-						)}
-					</Paper>
-				)} */}
 			</div>
 		</main>
 	)
