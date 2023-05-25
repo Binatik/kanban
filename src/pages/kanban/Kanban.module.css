@@ -1,20 +1,20 @@
 .kanban_list {
 	display: flex;
+	overflow-x: auto;
+	overflow-y: hidden;
+	flex-wrap: nowrap;
+	pointer-events: none;
 }
 
 .kanban_paper {
 	margin-right: 12px;
 }
 
-.kanban_item {
-}
-
-.kanban_new {
-}
-
 .kanban_column {
 	align-self: self-start;
 	margin-right: 8px;
+	flex-shrink: 0;
+	pointer-events: auto;
 }
 
 .kanban_title {
@@ -23,4 +23,16 @@
 
 .kanban_item {
 	width: 100%;
+}
+
+/* для Chrome/Edge/Safari */
+.kanban_list::-webkit-scrollbar {
+	height: 0;
+	width: 0;
+}
+.kanban_list::-webkit-scrollbar-track {
+	background: var(--color-primary);
+}
+.kanban_list::-webkit-scrollbar-thumb {
+	background-color: var(--color-primary);
 }

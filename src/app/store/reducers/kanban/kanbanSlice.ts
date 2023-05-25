@@ -35,21 +35,31 @@ export const kanbanSlice = createSlice({
 	initialState,
 	reducers: {
 		createColumn: (state): void => {
+			if (state.value === '') {
+				alert('Поле пустое')
+				return
+			}
 			const column: IKanbanColumn = {
 				id: uniqid(),
 				title: state.value,
 				cards: [],
 			}
 			state.colums.push(column)
+			state.value = ''
 		},
 
 		createCard: (state): void => {
+			if (state.value === '') {
+				alert('Поле пустое')
+				return
+			}
 			const cards: IKanbanCard = {
 				id: uniqid(),
 				text: state.value,
 			}
 
 			state.colums[state.clickIndex].cards.push(cards)
+			state.value = ''
 		},
 
 		openDialog: (state, action: PayloadAction<IOpenDialogProps>): void => {
@@ -67,9 +77,21 @@ export const kanbanSlice = createSlice({
 					break
 			}
 		},
+
 		closeDialog: (state): void => {
 			state.showDialog = false
 			state.showDialogCard = false
+		},
+
+		closeDialogColumn: (state): void => {
+			if (state.value.length > 0) {
+				state.showDialog = false
+			}
+		},
+		closeDialogCard: (state): void => {
+			if (state.value.length > 0) {
+				state.showDialogCard = false
+			}
 		},
 
 		getValue: (state, action: PayloadAction<string>): void => {
@@ -79,4 +101,12 @@ export const kanbanSlice = createSlice({
 })
 
 export const kanbanReducer = kanbanSlice.reducer
-export const { createColumn, createCard, openDialog, closeDialog, getValue } = kanbanSlice.actions
+export const {
+	createColumn,
+	createCard,
+	openDialog,
+	closeDialog,
+	closeDialogColumn,
+	closeDialogCard,
+	getValue,
+} = kanbanSlice.actions

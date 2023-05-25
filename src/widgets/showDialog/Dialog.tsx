@@ -23,6 +23,7 @@ function Dialog({ size, command, className, placeholder }: IDialogProps) {
 				size="sm"
 				appearance="secondary">
 				<textarea
+					onMouseDown={(event) => event.stopPropagation()}
 					onInput={resizeTexterea}
 					onChange={(event) => dispatch(getValue(event.currentTarget.value))}
 					rows={1}

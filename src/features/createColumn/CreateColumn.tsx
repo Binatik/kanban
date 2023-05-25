@@ -1,12 +1,12 @@
 import { ButtonPrimary, Paragraph } from '../../entities'
 import { useDispatch } from 'react-redux'
-import { closeDialog, createColumn } from '../../app/store/reducers/kanban/kanbanSlice'
+import { closeDialogColumn, createColumn } from '../../app/store/reducers/kanban/kanbanSlice'
 
 function CreateColumn() {
 	const dispatch = useDispatch()
 
 	function dialogOnClick() {
-		dispatch(closeDialog())
+		dispatch(closeDialogColumn())
 		dispatch(createColumn())
 	}
 

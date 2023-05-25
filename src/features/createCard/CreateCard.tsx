@@ -1,12 +1,12 @@
 import { ButtonPrimary, Paragraph } from '../../entities'
 import { useDispatch } from 'react-redux'
-import { closeDialog, createCard } from '../../app/store/reducers/kanban/kanbanSlice'
+import { closeDialogCard, createCard } from '../../app/store/reducers/kanban/kanbanSlice'
 
 function CreateCard() {
 	const dispatch = useDispatch()
 
 	function dialogOnClick() {
-		dispatch(closeDialog())
+		dispatch(closeDialogCard())
 		dispatch(createCard())
 	}
 

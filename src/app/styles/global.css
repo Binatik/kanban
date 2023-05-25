@@ -19,16 +19,27 @@
 }
 
 html,
-body {
+body,
+#root {
 	background-image: url('https://i.ibb.co/bbrD2Mc/background.jpg');
+	background-attachment: fixed;
 	background-size: cover;
-	min-height: 100vh;
+	height: 100%;
+}
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
 }
 
 .container_extra {
-	max-width: 100%;
+	display: block;
 	padding: 20px;
-	/* overflow-x: scroll; */
+}
+
+.content {
+	flex: 1 0 auto;
 }
 
 .filled {
