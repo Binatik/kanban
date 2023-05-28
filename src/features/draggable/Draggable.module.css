@@ -1,0 +1,5 @@
+.draggable {
+	align-self: self-start;
+	flex-shrink: 0;
+	pointer-events: auto;
+}

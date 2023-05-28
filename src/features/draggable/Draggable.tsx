@@ -3,6 +3,7 @@ import { IDraggableProps } from './Draggable.props'
 import { useDispatch, useSelector } from 'react-redux'
 import { moveKanban } from '../../app/store/reducers/kanban/kanbanSlice'
 import { RootState } from '../../app/store/store'
+import style from './Draggable.module.css'
 
 function Draggable({ children, htmlID }: IDraggableProps) {
 	const dispatch = useDispatch()
@@ -10,17 +11,22 @@ function Draggable({ children, htmlID }: IDraggableProps) {
 	console.log(table)
 
 	function onDragStart(event: React.DragEvent<HTMLDivElement>) {
-		event.dataTransfer.setData('id/start', event.currentTarget.id)
+		event.dataTransfer.setData('id/start', (event.target as HTMLElement).id)
 	}
 
 	function onDragOver(event: React.DragEvent<HTMLDivElement>) {
-		event.stopPropagation()
+		// event.stopPropagation()
 		event.preventDefault()
 	}
 
 	function onDragDrop(event: React.DragEvent<HTMLDivElement>) {
 		const startID = event.dataTransfer.getData('id/start')
-		const endID = event.currentTarget.id
+
+		const endID = (event.target as Element).closest('[draggable="true"]')?.id
+
+		if (!endID) return
+
+		console.log(endID)
 		dispatch(moveKanban({ startID, endID }))
 
 		// const card = state.colums.flatMap((column) => column.cards).find((item) => item.id === id)
@@ -37,7 +43,8 @@ function Draggable({ children, htmlID }: IDraggableProps) {
 			draggable={true}
 			onDragStart={onDragStart}
 			onDragOver={onDragOver}
-			onDrop={onDragDrop}>
+			onDrop={onDragDrop}
+			className={style.draggable}>
 			{children}
 		</div>
 	)

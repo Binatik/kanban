@@ -108,7 +108,9 @@ export const kanbanSlice = createSlice({
 		moveKanban: (state, action: PayloadAction<IDataTransfer>): void => {
 			const table = new Map()
 
-			state.colums.forEach((column, index: number) => {
+			const flatCards = state.colums.flatMap((column) => column.cards)
+
+			state.colums.forEach((column) => {
 				if (column.id === action.payload.startID && column.name === 'column') {
 					table.set('column/start', column)
 				}
@@ -116,18 +118,59 @@ export const kanbanSlice = createSlice({
 				if (column.id === action.payload.endID && column.name === 'column') {
 					table.set('column/end', column)
 				}
-
-				column.cards.forEach((card) => {
-					if (column.id === action.payload.startID && card.name === 'card') {
-						table.set('card/start', card)
-					}
-
-					if (column.id === action.payload.endID && card.name === 'card') {
-						table.set('card/end', card)
-					}
-				})
 			})
 
+			flatCards.forEach((card) => {
+				if (card.id === action.payload.startID && card.name === 'card') {
+					table.set('card/start', card)
+				}
+
+				if (card.id === action.payload.endID && card.name === 'card') {
+					table.set('card/end', card)
+				}
+			})
+
+			const columnStart = table.get('column/start')
+			const columnEnd = table.get('column/end')
+
+			const cardStart = table.get('card/start')
+			const cardEnd = table.get('card/end')
+
+			const copyColumns = [...state.colums]
+			const indexColumnStart = copyColumns.indexOf(columnStart)
+			const indexColumnEnd = copyColumns.indexOf(columnEnd)
+
+			const result = copyColumns.map((column) => {
+				if (!columnStart || !columnEnd) return column
+				if (column === columnStart) {
+					return copyColumns[indexColumnEnd]
+				} else if (column === columnEnd) {
+					return copyColumns[indexColumnStart]
+				}
+
+				const cards = column.cards.map((card) => {
+					if (!cardStart || !cardEnd) return card
+
+					const indexCardStart = column.cards.indexOf(cardStart)
+					const indexCardEnd = column.cards.indexOf(cardEnd)
+
+					if (card === cardStart) {
+						return column.cards[indexCardEnd]
+					} else if (card === cardEnd) {
+						return column.cards[indexCardStart]
+					} else {
+						console.log('ffff')
+						return card
+					}
+				})
+
+				return {
+					...column,
+					cards,
+				}
+			})
+			table.set('result', result)
+			state.colums = result
 			state.table = table
 		},
 	},

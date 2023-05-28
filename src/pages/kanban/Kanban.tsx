@@ -32,6 +32,7 @@ function Kanban() {
 		const diff = event.pageX - list.offsetLeft
 		setStartX(diff)
 		setScrollLeft(list.scrollLeft)
+		// event.preventDefault()
 	}
 
 	function scrollTouchMove(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -65,7 +66,6 @@ function Kanban() {
 						<Draggable htmlID={column.id} key={column.id}>
 							<Paper
 								className={classNames(styles.kanban_column)}
-								key={column.id}
 								size="md"
 								appearance="primary">
 								<Heading
