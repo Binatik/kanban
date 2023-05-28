@@ -1,17 +1,20 @@
 import { IOpenDialogProps } from './../../../../features/openDialog/OpenDialog.props'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, current } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import uniqid from 'uniqid'
+import { v4 as uui } from 'uuid'
+import { IDataTransfer } from '../../../../entities'
 
 export interface IKanbanCard {
 	id: string
 	text: string
+	name: 'card'
 }
 
 export interface IKanbanColumn {
 	id: string
 	title: string
 	cards: IKanbanCard[]
+	name: 'column'
 }
 
 export interface IKanbanState {
@@ -20,6 +23,7 @@ export interface IKanbanState {
 	showDialogCard: boolean
 	clickIndex: number
 	value: string
+	table: object
 }
 
 const initialState: IKanbanState = {
@@ -28,6 +32,7 @@ const initialState: IKanbanState = {
 	showDialogCard: false,
 	clickIndex: 0,
 	value: '',
+	table: {},
 }
 
 export const kanbanSlice = createSlice({
@@ -40,9 +45,10 @@ export const kanbanSlice = createSlice({
 				return
 			}
 			const column: IKanbanColumn = {
-				id: uniqid(),
+				id: uui().split('-')[0],
 				title: state.value,
 				cards: [],
+				name: 'column',
 			}
 			state.colums.push(column)
 			state.value = ''
@@ -54,8 +60,9 @@ export const kanbanSlice = createSlice({
 				return
 			}
 			const cards: IKanbanCard = {
-				id: uniqid(),
+				id: uui().split('-')[0],
 				text: state.value,
+				name: 'card',
 			}
 
 			state.colums[state.clickIndex].cards.push(cards)
@@ -97,6 +104,32 @@ export const kanbanSlice = createSlice({
 		getValue: (state, action: PayloadAction<string>): void => {
 			state.value = action.payload
 		},
+
+		moveKanban: (state, action: PayloadAction<IDataTransfer>): void => {
+			const table = new Map()
+
+			state.colums.forEach((column, index: number) => {
+				if (column.id === action.payload.startID && column.name === 'column') {
+					table.set('column/start', column)
+				}
+
+				if (column.id === action.payload.endID && column.name === 'column') {
+					table.set('column/end', column)
+				}
+
+				column.cards.forEach((card) => {
+					if (column.id === action.payload.startID && card.name === 'card') {
+						table.set('card/start', card)
+					}
+
+					if (column.id === action.payload.endID && card.name === 'card') {
+						table.set('card/end', card)
+					}
+				})
+			})
+
+			state.table = table
+		},
 	},
 })
 
@@ -109,4 +142,5 @@ export const {
 	closeDialogColumn,
 	closeDialogCard,
 	getValue,
+	moveKanban,
 } = kanbanSlice.actions

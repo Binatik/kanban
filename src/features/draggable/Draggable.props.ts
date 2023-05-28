@@ -1,8 +1,7 @@
 import { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react'
 
-export interface IPaperProps
+export interface IDraggableProps
 	extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-	appearance: 'primary' | 'secondary'
-	size: 'sm' | 'md'
+	htmlID: string
 	children: ReactNode
 }
