@@ -7,9 +7,10 @@ export interface IDataTransfer {
 	endID: string
 }
 
-function Paper({ appearance, size, children, className }: IPaperProps) {
+function Paper({ appearance, size, children, className, ...props }: IPaperProps) {
 	return (
 		<div
+			{...props}
 			className={classNames(className, styles.paper, {
 				[styles.paper_primary]: appearance === 'primary',
 				[styles.paper_secondary]: appearance === 'secondary',

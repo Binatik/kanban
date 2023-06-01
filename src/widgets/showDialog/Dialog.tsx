@@ -19,8 +19,6 @@ function Dialog({ size, command, className, placeholder }: IDialogProps) {
 	return (
 		<>
 			<Paper
-				id="dialog"
-				draggable={false}
 				className={classNames(styles.dialog_top, className)}
 				size="sm"
 				appearance="secondary">

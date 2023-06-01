@@ -121,6 +121,7 @@ export const kanbanSlice = createSlice({
 			})
 
 			flatCards.forEach((card) => {
+				console.log('test')
 				if (card.id === action.payload.startID && card.name === 'card') {
 					table.set('card/start', card)
 				}
@@ -136,41 +137,27 @@ export const kanbanSlice = createSlice({
 			const cardStart = table.get('card/start')
 			const cardEnd = table.get('card/end')
 
-			const copyColumns = [...state.colums]
-			const indexColumnStart = copyColumns.indexOf(columnStart)
-			const indexColumnEnd = copyColumns.indexOf(columnEnd)
+			console.log(cardStart, cardEnd)
 
-			const result = copyColumns.map((column) => {
-				if (!columnStart || !columnEnd) return column
-				if (column === columnStart) {
-					return copyColumns[indexColumnEnd]
-				} else if (column === columnEnd) {
-					return copyColumns[indexColumnStart]
-				}
+			const copyStateColumns = [...state.colums] // создаем копию массива
+			const indexColumnStart = copyStateColumns.indexOf(columnStart)
+			const indexColumnEnd = copyStateColumns.indexOf(columnEnd)
 
-				const cards = column.cards.map((card) => {
-					if (!cardStart || !cardEnd) return card
+			copyStateColumns[indexColumnEnd] = columnStart
+			copyStateColumns[indexColumnStart] = columnEnd
 
-					const indexCardStart = column.cards.indexOf(cardStart)
-					const indexCardEnd = column.cards.indexOf(cardEnd)
+			copyStateColumns.map((column) => {
+				const indexCardStart = column.cards.indexOf(cardStart)
+				const indexCardEnd = column.cards.indexOf(cardEnd)
 
-					if (card === cardStart) {
-						return column.cards[indexCardEnd]
-					} else if (card === cardEnd) {
-						return column.cards[indexCardStart]
-					} else {
-						console.log('ffff')
-						return card
-					}
-				})
-
-				return {
-					...column,
-					cards,
-				}
+				column.cards[indexCardStart] = cardEnd
+				column.cards[indexCardEnd] = cardStart
 			})
-			table.set('result', result)
-			state.colums = result
+
+			// table.set('cardStart', cardStart)
+			// table.set('cardEnd', cardEnd)
+			state.colums = copyStateColumns // возвращаем измененную копию массива
+			console.log(table)
 			state.table = table
 		},
 	},

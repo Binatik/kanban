@@ -32,7 +32,6 @@ function Kanban() {
 		const diff = event.pageX - list.offsetLeft
 		setStartX(diff)
 		setScrollLeft(list.scrollLeft)
-		// event.preventDefault()
 	}
 
 	function scrollTouchMove(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -48,7 +47,6 @@ function Kanban() {
 
 	function scrollTouchUp(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
 		setIsDown(false)
-		// event.preventDefault()
 	}
 
 	return (
@@ -63,7 +61,7 @@ function Kanban() {
 					className={styles.kanban_list}>
 					{/* //Структура канбана */}
 					{state.colums.map((column, index: number) => (
-						<Draggable htmlID={column.id} key={column.id}>
+						<Draggable dataType="column" htmlID={column.id} key={column.id}>
 							<Paper
 								className={classNames(styles.kanban_column)}
 								size="md"
@@ -77,7 +75,7 @@ function Kanban() {
 								</Heading>
 
 								{column.cards.map((card) => (
-									<Draggable htmlID={card.id} key={card.id}>
+									<Draggable dataType="cards" htmlID={card.id} key={card.id}>
 										<Paper
 											className={classNames(styles.kanban_item)}
 											size="sm"
@@ -160,7 +158,6 @@ function Kanban() {
 					{state.colums.length === 0 && !state.showDialog && (
 						<Paper
 							key={6}
-							draggable={false}
 							className={classNames(styles.kanban_column)}
 							appearance="primary"
 							size="md">
@@ -172,7 +169,6 @@ function Kanban() {
 					{state.colums.length > 0 && (
 						<Paper
 							key={7}
-							draggable={false}
 							className={classNames(styles.kanban_column)}
 							appearance="primary"
 							size="md">
