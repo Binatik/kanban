@@ -140,25 +140,41 @@ export const kanbanSlice = createSlice({
 			console.log(cardStart, cardEnd)
 
 			const copyStateColumns = [...state.colums] // создаем копию массива
+
 			const indexColumnStart = copyStateColumns.indexOf(columnStart)
 			const indexColumnEnd = copyStateColumns.indexOf(columnEnd)
 
 			copyStateColumns[indexColumnEnd] = columnStart
 			copyStateColumns[indexColumnStart] = columnEnd
 
-			copyStateColumns.map((column) => {
-				const indexCardStart = column.cards.indexOf(cardStart)
-				const indexCardEnd = column.cards.indexOf(cardEnd)
-
-				column.cards[indexCardStart] = cardEnd
-				column.cards[indexCardEnd] = cardStart
+			const result = copyStateColumns.map((column) => {
+				const copyStateCards = [...column.cards]
+				const indexCardStart = copyStateCards.indexOf(cardStart)
+				const indexCardEnd = copyStateCards.indexOf(cardEnd)
+				copyStateCards[indexCardEnd] = cardStart
+				copyStateCards[indexCardStart] = cardEnd
+				return {
+					...column,
+					cards: copyStateCards.filter((card) => !!card),
+				}
 			})
+			state.colums = result
+
+			// const result = copyStateColumns.map((column) => {
+			// 	const indexCardStart = column.cards.indexOf(cardStart)
+			// 	const indexCardEnd = column.cards.indexOf(cardEnd)
+
+			// 	column.cards[indexCardStart] = cardEnd
+			// 	column.cards[indexCardEnd] = cardStart
+
+			// 	return column
+			// })
 
 			// table.set('cardStart', cardStart)
 			// table.set('cardEnd', cardEnd)
-			state.colums = copyStateColumns // возвращаем измененную копию массива
-			console.log(table)
-			state.table = table
+			// state.colums = copyStateColumns // возвращаем измененную копию массива
+			// console.log(table)
+			// state.table = table
 		},
 	},
 })
