@@ -1,5 +1,5 @@
 import { IOpenDialogProps } from './../../../../features/openDialog/OpenDialog.props'
-import { createSlice, current } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { v4 as uui } from 'uuid'
 import { IDataTransfer } from '../../../../entities'
@@ -159,24 +159,26 @@ export const kanbanSlice = createSlice({
 				}
 			})
 			state.colums = result
+		},
 
-			// const result = copyStateColumns.map((column) => {
-			// 	const indexCardStart = column.cards.indexOf(cardStart)
-			// 	const indexCardEnd = column.cards.indexOf(cardEnd)
-
-			// 	column.cards[indexCardStart] = cardEnd
-			// 	column.cards[indexCardEnd] = cardStart
-
-			// 	return column
-			// })
-
-			// table.set('cardStart', cardStart)
-			// table.set('cardEnd', cardEnd)
-			// state.colums = copyStateColumns // возвращаем измененную копию массива
-			// console.log(table)
-			// state.table = table
+		updateKanban: (state) => {
+			const json = localStorage.getItem('kanban')
+			if (!json) return state
+			const colums = JSON.parse(json) as IKanbanColumn[]
+			return { ...state, colums }
 		},
 	},
+
+	// extraReducers: (builder) => {
+	// 	builder.addCase(saveKanbanColumnsReducer.pending, (state) => {
+	// 		const json = localStorage.getItem('kanban')
+	// 		if (!json) return state
+	// 		const colums = JSON.parse(json) as IKanbanColumn[]
+	// 		console.log(colums, 'ccc')
+
+	// 		return { ...state, colums }
+	// 	})
+	// },
 })
 
 export const kanbanReducer = kanbanSlice.reducer
@@ -189,4 +191,5 @@ export const {
 	closeDialogCard,
 	getValue,
 	moveKanban,
+	updateKanban,
 } = kanbanSlice.actions

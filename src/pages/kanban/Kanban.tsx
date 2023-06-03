@@ -16,8 +16,6 @@ function Kanban() {
 		table: useSelector((state: RootState) => state.kanbanReducer.table),
 	}
 
-	console.log(state.table)
-
 	const listRef = useRef<HTMLDivElement | null>(null)
 
 	const [isDown, setIsDown] = useState(false)
