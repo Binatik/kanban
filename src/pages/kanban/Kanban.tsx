@@ -43,17 +43,13 @@ function Kanban() {
 		list.scrollLeft = scrollLeft - walk
 	}
 
-	function scrollTouchUp(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-		setIsDown(false)
-	}
-
 	return (
 		<div className="wrapper">
 			<main className={classNames('container_extra', 'content')}>
 				<div
 					onMouseDown={scrollTouchDown}
 					onMouseMove={scrollTouchMove}
-					onMouseUp={scrollTouchUp}
+					onMouseUp={() => setIsDown(false)}
 					onMouseLeave={() => setIsDown(false)}
 					ref={listRef}
 					className={styles.kanban_list}>
